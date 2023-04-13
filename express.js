@@ -1,4 +1,5 @@
 import './db.js';
+import apiRouter from './routes/api-router.js';
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
@@ -17,4 +18,5 @@ app.use(cors());
 app.get('/', (req, res) => {
 res.send('Node.js Server is live!');
 });
+app.use('/api', apiRouter)
 export default app;
