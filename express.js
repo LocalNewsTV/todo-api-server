@@ -1,8 +1,10 @@
+import './db.js';
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
 import morgan from 'morgan';
 import cors from 'cors';
+
 const app = express();
 // Express middleware
 app.use(express.json());
