@@ -15,7 +15,7 @@ const listSchema = new mongoose.Schema({
     maxLength: 18,
     match: /^[A-Za-z ]+$/
   },
-  contents: [{
+  content: {
     item: {
       type: String,
       required: true,
@@ -26,7 +26,7 @@ const listSchema = new mongoose.Schema({
       type: Date,
       default: Date.now
     }
-  }]
+  }
 });
 
 listSchema.set('toJSON', {
