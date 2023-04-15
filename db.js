@@ -12,3 +12,6 @@ mongoose.connection.on('connected', () => {
 mongoose.connection.on('error', (err) => {
   console.warn(`Mongoose connection error: ${err}`);
 });
+
+import './models/user-schema.js';
+import './models/list-schema.js';
