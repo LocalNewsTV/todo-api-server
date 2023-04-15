@@ -5,3 +5,7 @@ export const getItemsFromList = (req, res) => {
 export const addItemToList = async (req, res) => {
   res.status(200).send('Successful API POST Request.');
 }
+
+export const removeOneItemFromList = async ( req, res ) => {
+  res.status(200).send('Successful API Delete Request');
+}
