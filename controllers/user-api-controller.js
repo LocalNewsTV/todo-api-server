@@ -1,6 +1,9 @@
 import mongoose from 'mongoose';
 import passport from 'passport';
 import LocalStrategy from 'passport-local';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const usersModel = mongoose.model('Users');
 
@@ -22,7 +25,20 @@ passport.use(new LocalStrategy(
   }
 ))
 export const signIn = (req, res) => {
-  res.status(200).send('Successful API POST Request - Sign in');
+  jwt.sign(
+    { sub: req.user._id,
+    username: req.user.username },
+    process.env.JWT_SECRET,
+    { expiresIn: '60m' },
+    (error, token) => {
+      if(error) {
+        res.status(400).send('Bad Request. Couldn\'t generate token');
+      }
+      else {
+        res.status(200).json({token});
+      }
+    }
+  )
 }
 
 export const signUp = async (req, res) => {
