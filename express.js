@@ -5,6 +5,8 @@ import cookieParser from 'cookie-parser';
 import compression from 'compression';
 import morgan from 'morgan';
 import cors from 'cors';
+import rateLimit from 'express-rate-limit';
+
 
 const app = express();
 // Express middleware
@@ -14,6 +16,10 @@ app.use(cookieParser());
 app.use(compression());
 app.use(morgan('dev'));
 app.use(cors());
+app.use(rateLimit({
+  windowMs: 60*1000*5,
+  max: 20
+}));
 // Routing
 app.get('/', (req, res) => {
 res.send('Node.js Server is live!');
