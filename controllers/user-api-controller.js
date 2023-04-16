@@ -1,7 +1,26 @@
 import mongoose from 'mongoose';
-import argon2 from 'argon2';
+import passport from 'passport';
+import LocalStrategy from 'passport-local';
+
 const usersModel = mongoose.model('Users');
 
+passport.use(new LocalStrategy(
+  (username, password, done) => {
+    usersModel.findOne({
+      'or': [
+        { email: username },
+        { username: username }
+      ]
+    })
+    .exec( async (error, user) => {
+      if(error) return done(error);
+      //no user found
+      if(!user) return done(null, false);
+      if(!await user.verifyPassword(password)) { return done(null, false); }
+      return done(null, user);
+    })
+  }
+))
 export const signIn = (req, res) => {
   res.status(200).send('Successful API POST Request - Sign in');
 }

@@ -6,7 +6,7 @@ import compression from 'compression';
 import morgan from 'morgan';
 import cors from 'cors';
 import rateLimit from 'express-rate-limit';
-
+import passport from 'passport';
 
 const app = express();
 // Express middleware
@@ -20,6 +20,7 @@ app.use(rateLimit({
   windowMs: 60*1000*5,
   max: 20
 }));
+app.use(passport.initialize());
 // Routing
 app.get('/', (req, res) => {
 res.send('Node.js Server is live!');

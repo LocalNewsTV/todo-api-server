@@ -1,6 +1,7 @@
 import express from 'express';
 import {getItemsFromList, addItemToList, removeOneItemFromList} from '../controllers/list-api-controller.js';
 import {signIn, signUp} from '../controllers/user-api-controller.js';
+import passport from 'passport';
 const router = express.Router();
 
 router.route('/list')
@@ -8,7 +9,7 @@ router.route('/list')
 .post(addItemToList)
 .delete(removeOneItemFromList);
 router.route('/login')
-.post(signIn);
+.post(passport.authenticate('local', { session: false }), signIn);
 
 router.route('/signup')
 .post(signUp);
