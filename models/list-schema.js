@@ -4,7 +4,7 @@ const listSchema = new mongoose.Schema({
   user: {
     type: String,
     required: true,
-    minLength: 6,
+    minLength: 4,
     maxLength: 30,
     match: /^[A-Za-z0-9]+$/
   },

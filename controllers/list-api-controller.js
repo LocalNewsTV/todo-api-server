@@ -41,7 +41,11 @@ export const getItemsFromList = async (req, res) => {
 }
 
 export const addItemToList = async (req, res) => {
-  res.status(200).send('Successful API POST Request.');
+  const newItem = await listsModel.create({
+    "user": req.user.username,
+    ...req.body
+  })
+  res.status(200).send(newItem);
 }
 
 export const removeOneItemFromList = async ( req, res ) => {
