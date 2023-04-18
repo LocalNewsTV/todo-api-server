@@ -29,8 +29,15 @@ passport.use(new JwtStrategy(
   }
 ));
 
-export const getItemsFromList = (req, res) => {
-  res.status(200).send('Successful API GET Request');
+export const getItemsFromList = async (req, res) => {
+  console.log(req.user.username, req.user._id)
+  await listsModel.find({
+    'listName': req.body.listName,
+    'user': req.user.username
+  }).then((response)=> res.status(200).send(JSON.stringify(response)))
+  .catch(ex=>console.log("Error", ex));
+  
+
 }
 
 export const addItemToList = async (req, res) => {
@@ -39,4 +46,8 @@ export const addItemToList = async (req, res) => {
 
 export const removeOneItemFromList = async ( req, res ) => {
   res.status(200).send('Successful API Delete Request');
+}
+
+export const getLists = async ( req, res) => {
+  res.status(200).send(('Successful API List Request'));
 }

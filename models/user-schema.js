@@ -32,7 +32,7 @@ userSchema.set('toJSON', {
   transform: (doc, ret) => { delete ret._id; }
 });
 
-//Pre-hook to Saly and Hash password using argon2id
+//Pre-hook to Salt and Hash password using argon2id
 userSchema.pre('save', async function() {
   try {
     //Hash and salt password

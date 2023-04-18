@@ -12,13 +12,15 @@ const usersModel = mongoose.model('users');
 
 passport.use(new LocalStrategy(
   (username, password, done) => {
+    console.log("USERNAME:",username);
     usersModel.findOne({
-      'or': [
+      '$or': [
         { email: username },
         { username: username }
       ]
     })
     .exec( async (error, user) => {
+      console.log(user);
       if(error) return done(error);
       //no user found
       if(!user) return done(null, false);
@@ -29,8 +31,10 @@ passport.use(new LocalStrategy(
 ))
 export const signIn = (req, res) => {
   jwt.sign(
-    { sub: req.user._id,
-    username: req.user.username },
+    { 
+      sub: req.user._id,
+      username: req.user.username 
+    },
     process.env.JWT_SECRET,
     { expiresIn: '60m' },
     (error, token) => {
@@ -49,7 +53,7 @@ export const signUp = async (req, res) => {
     const message = await usersModel.create(req.body);
     res.status(201).send("User Created");
   } else {
-    res.status(200).send("Username of Email is already in use");
+    res.status(200).send("Username or Email is already in use");
   }
 }
 
