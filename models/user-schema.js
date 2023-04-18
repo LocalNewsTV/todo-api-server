@@ -54,4 +54,4 @@ async function(plainTextPassword) {
     console.log('Error verifying password:', err);
   }
 }
-export default mongoose.model('Users', userSchema);
+export default mongoose.model('users', userSchema);

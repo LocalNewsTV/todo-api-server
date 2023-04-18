@@ -5,9 +5,10 @@ import passport from 'passport';
 const router = express.Router();
 
 router.route('/list')
-.get(getItemsFromList)
-.post(addItemToList)
-.delete(removeOneItemFromList);
+.get(passport.authenticate('jwt', {session: false }), getItemsFromList)
+.post(passport.authenticate('jwt', {session: false }), addItemToList)
+.delete(passport.authenticate('jwt', {session: false }), removeOneItemFromList);
+
 router.route('/login')
 .post(passport.authenticate('local', { session: false }), signIn);
 

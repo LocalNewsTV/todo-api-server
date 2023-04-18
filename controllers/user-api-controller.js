@@ -3,9 +3,12 @@ import passport from 'passport';
 import LocalStrategy from 'passport-local';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
-dotenv.config();
 
-const usersModel = mongoose.model('Users');
+
+dotenv.config();
+const usersModel = mongoose.model('users');
+
+
 
 passport.use(new LocalStrategy(
   (username, password, done) => {
