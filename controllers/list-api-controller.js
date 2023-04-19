@@ -36,8 +36,6 @@ export const getItemsFromList = async (req, res) => {
     'user': req.user.username
   }).then((response)=> res.status(200).send(JSON.stringify(response)))
   .catch(ex=>console.log("Error", ex));
-  
-
 }
 
 export const addItemToList = async (req, res) => {
@@ -45,13 +43,47 @@ export const addItemToList = async (req, res) => {
     "user": req.user.username,
     ...req.body
   })
-  res.status(200).send(newItem);
+  res.status(201).send(newItem);
 }
 
 export const removeOneItemFromList = async ( req, res ) => {
-  res.status(200).send('Successful API Delete Request');
+  try{
+    const delItem = await listsModel.deleteOne({
+      'id': req.body.id,
+      'username': req.user.username
+    })
+    res.status(200).send(delItem);
+  } catch(ex) {
+    res.status()
+  }
 }
 
-export const getLists = async ( req, res) => {
-  res.status(200).send(('Successful API List Request'));
+export const getLists = async ( req, res ) => {
+  try{
+    const items = await usersModel.find({'username': req.user.username,
+    })
+    res.status(200).send(JSON.stringify(items[0].lists));
+  } catch (ex){
+    res.status(500).send("Internal Server Error");
+  }
+}
+
+export const addToUsersLists = async ( req, res) => {
+  try {
+    const check = await usersModel.find({'username': req.user.username});
+    console.log(check);
+    if(!check[0].lists.includes(req.body.newItem)){ 
+      await usersModel.findOneAndUpdate({
+          'username': req.user.username,
+      },
+      {'$push': {"lists": req.body.newItem }})
+      res.status(201).send("New Item Added");
+    } else {
+      res.status(409).send("List already exists");
+    }
+  } catch(ex) {
+    console.log(ex);
+    res.status(400).send("Invalid Data sent");
+  }
+
 }

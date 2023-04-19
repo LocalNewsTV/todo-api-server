@@ -7,8 +7,10 @@ import morgan from 'morgan';
 import cors from 'cors';
 import rateLimit from 'express-rate-limit';
 import passport from 'passport';
+import mongoSanitize from 'express-mongo-sanitize';
 
 const app = express();
+
 // Express middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -21,6 +23,11 @@ app.use(rateLimit({
   max: 20
 }));
 app.use(passport.initialize());
+app.use(mongoSanitize({
+  allowDots: true,
+  replaceWith: "_"
+}))
+
 // Routing
 app.get('/', (req, res) => {
 res.send('Node.js Server is live!');
