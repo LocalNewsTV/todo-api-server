@@ -23,6 +23,11 @@ const userSchema = new mongoose.Schema({
     minLength: 8,
     maxLength: 64,
     format: 'password'
+  },
+  lists: {
+    type: Array,
+    required: true,
+    default: []
   }
 });
 

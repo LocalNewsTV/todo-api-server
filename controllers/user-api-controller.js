@@ -12,7 +12,6 @@ const usersModel = mongoose.model('users');
 
 passport.use(new LocalStrategy(
   (username, password, done) => {
-    console.log("USERNAME:",username);
     usersModel.findOne({
       '$or': [
         { email: username },
