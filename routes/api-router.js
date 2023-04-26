@@ -21,7 +21,7 @@ router.route('/signup')
 .post(signUp);
 
 router.route('/weather')
-.get(fetchWeather);
+.post(fetchWeather);
 router.route('/health')
 .get((req, res)=>{
   res.status(200).send("Successful API GET Request - Health");

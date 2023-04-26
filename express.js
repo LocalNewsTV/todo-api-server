@@ -20,7 +20,7 @@ app.use(morgan('dev'));
 app.use(cors());
 app.use(rateLimit({
   windowMs: 60*1000*5,
-  max: 20
+  max: 40
 }));
 app.use(passport.initialize());
 app.use(mongoSanitize({
