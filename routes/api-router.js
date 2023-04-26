@@ -1,6 +1,7 @@
 import express from 'express';
 import {getItemsFromList, addItemToList, removeOneItemFromList, getLists, addToUsersLists} from '../controllers/list-api-controller.js';
 import {signIn, signUp} from '../controllers/user-api-controller.js';
+import { fetchWeather } from '../controllers/weather-api-controller.js';
 import passport from 'passport';
 const router = express.Router();
 
@@ -19,6 +20,8 @@ router.route('/login')
 router.route('/signup')
 .post(signUp);
 
+router.route('/weather')
+.get(fetchWeather);
 router.route('/health')
 .get((req, res)=>{
   res.status(200).send("Successful API GET Request - Health");
