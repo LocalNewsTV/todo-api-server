@@ -10,9 +10,11 @@ router.route('/userlists')
 .patch(passport.authenticate('jwt', { session: false }), addToUsersLists);
 
 router.route('/list')
-.get(passport.authenticate('jwt', {session: false }), getItemsFromList)
 .post(passport.authenticate('jwt', {session: false }), addItemToList)
 .delete(passport.authenticate('jwt', {session: false }), removeOneItemFromList);
+
+router.route('/listItems')
+.post(passport.authenticate('jwt', {session: false}), getItemsFromList);
 
 router.route('/login')
 .post(passport.authenticate('local', { session: false }), signIn);
