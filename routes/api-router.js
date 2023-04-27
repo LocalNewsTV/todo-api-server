@@ -1,5 +1,5 @@
 import express from 'express';
-import {getItemsFromList, addItemToList, removeOneItemFromList, getLists, addToUsersLists} from '../controllers/list-api-controller.js';
+import {getItemsFromList, addItemToList, removeOneItemFromList, getLists, addToUsersLists, removeFromUsersLists} from '../controllers/list-api-controller.js';
 import {signIn, signUp} from '../controllers/user-api-controller.js';
 import { fetchWeather } from '../controllers/weather-api-controller.js';
 import passport from 'passport';
@@ -7,7 +7,8 @@ const router = express.Router();
 
 router.route('/userlists')
 .get(passport.authenticate('jwt', { session: false }), getLists)
-.patch(passport.authenticate('jwt', { session: false }), addToUsersLists);
+.patch(passport.authenticate('jwt', { session: false }), addToUsersLists)
+.delete(passport.authenticate('jwt', { session: false}), removeFromUsersLists);
 
 router.route('/list')
 .post(passport.authenticate('jwt', {session: false }), addItemToList)

@@ -85,5 +85,28 @@ export const addToUsersLists = async ( req, res) => {
     console.log(ex);
     res.status(400).send("Invalid Data sent");
   }
-
 }
+
+export const removeFromUsersLists = async ( req, res ) => { 
+  try {
+    const check = await usersModel.find({'username': req.user.username});
+    if(check[0].lists.includes(req.body.list)) {
+      await usersModel.findOneAndUpdate({
+        'username': req.user.username
+      }, { $pull: {
+        lists: req.body.list
+      }}
+      )
+      await listsModel.deleteMany({
+        'username': req.user.username,
+        'listName': req.body.list 
+      })
+      res.status(204).send("Deleted");
+    } else {
+      res.status(404).send("User not found")
+    }
+  } catch(ex) {
+    console.log(ex);
+    res.status(400).send("Bad Request");
+  }
+} 
