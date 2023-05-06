@@ -48,11 +48,16 @@ export const addItemToList = async (req, res) => {
 
 export const removeOneItemFromList = async ( req, res ) => {
   try{
-    const delItem = await listsModel.deleteOne({
-      'id': req.body.id,
-      'username': req.user.username
-    })
-    res.status(200).send(delItem);
+    const response = await listsModel.find({'_id': req.body.id, 'username': req.user.username}) 
+    if(response.length > 0){
+      const delItem = await listsModel.deleteOne({
+        '_id': req.body.id,
+        'username': req.user.username
+      })
+      res.status(200).send(delItem);
+    } else {
+      res.status(400).send(JSON.stringify({"response": "NOT FOUND"}))
+    }
   } catch(ex) {
     res.status()
   }
