@@ -19,8 +19,8 @@ app.use(compression());
 app.use(morgan('dev'));
 app.use(cors());
 app.use(rateLimit({
-  windowMs: 60*1000*5,
-  max: 40
+  windowMs: 60*1000*4,
+  max: 400
 }));
 app.use(passport.initialize());
 app.use(mongoSanitize({
